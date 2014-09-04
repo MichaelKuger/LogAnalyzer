@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root onDragDetected="#onDragDetected" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kuger.loganalyzer.ui.widgets.filter.TemporalFilterWidgetController">
+    <children>
+        <VBox styleClass="border" stylesheets="@../style.css">
+            <children>
+                <Label text="Temporal Filter" />
+                <Separator prefWidth="200.0" />
+                <TextField fx:id="txName" promptText="pipeline name" text="myNewPipeline" />
+                <DatePicker fx:id="datePicker" />
+                <HBox>
+                    <children>
+                        <Label fx:id="timeLabel" text="0h 0min" />
+                    </children>
+                </HBox>
+                <Slider fx:id="hourSlider" blockIncrement="1.0" majorTickUnit="6.0" max="23.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                <Slider fx:id="minuteSlider" blockIncrement="1.0" majorTickUnit="15.0" max="59.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <ChoiceBox fx:id="temporalTypeChoiceBox" />
+                <Button mnemonicParsing="false" text="Delete" />
+            </children>
+        </VBox>
+    </children>
+</fx:root>
