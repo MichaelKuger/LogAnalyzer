@@ -20,7 +20,7 @@ public class MainUi extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/ui/create_environment.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("LogAnalyzer");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
