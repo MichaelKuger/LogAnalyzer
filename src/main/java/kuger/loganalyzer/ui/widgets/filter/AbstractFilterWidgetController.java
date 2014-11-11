@@ -13,7 +13,7 @@ import kuger.loganalyzer.ui.widgets.ControllerRepository;
 
 public abstract class AbstractFilterWidgetController {
 
-    private String identifier = Long.toString(System.currentTimeMillis());
+    private String identifier =Long.toString(System.currentTimeMillis());
 
     protected AbstractFilterWidgetController() {
         ControllerRepository.INSTANCE.addFilterWidgetController(this);

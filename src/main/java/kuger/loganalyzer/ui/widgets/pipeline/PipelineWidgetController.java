@@ -126,7 +126,7 @@ public class PipelineWidgetController {
 
         filtersOnPipeline.stream()
                 .map(ControllerRepository.INSTANCE::getFilterWidgetController)
-                .map(AbstractFilterWidgetController::createDto)
+                .map(AbstractFilterWidgetController::getIdentifier)
                 .forEach(result::addFilter);
 
         if (selectedFile != null) {

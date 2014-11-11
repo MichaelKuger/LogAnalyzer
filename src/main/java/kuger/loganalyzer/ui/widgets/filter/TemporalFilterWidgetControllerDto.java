@@ -6,19 +6,19 @@ import java.time.LocalDateTime;
 
 public class TemporalFilterWidgetControllerDto extends FilterDto {
 
-    private TemporalType type;
+    private TemporalType temporalType;
     private LocalDateTime dateTime;
 
     protected TemporalFilterWidgetControllerDto(String identifier, String filtername) {
         super(FilterType.TEMPORAL, identifier, filtername);
     }
 
-    protected void setType(TemporalType type) {
-        this.type = type;
+    protected void setTemporalType(TemporalType temporalType) {
+        this.temporalType = temporalType;
     }
 
-    public TemporalType getType() {
-        return type;
+    public TemporalType getTemporalType() {
+        return temporalType;
     }
 
     protected void setDateTime(LocalDateTime dateTime) {
@@ -30,6 +30,14 @@ public class TemporalFilterWidgetControllerDto extends FilterDto {
     }
 
     @Override
+    public String toString() {
+        return "TemporalFilterWidgetControllerDto{" +
+                "temporalType=" + temporalType +
+                ", dateTime=" + dateTime +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -38,7 +46,7 @@ public class TemporalFilterWidgetControllerDto extends FilterDto {
         TemporalFilterWidgetControllerDto that = (TemporalFilterWidgetControllerDto) o;
 
         if (dateTime != null ? !dateTime.equals(that.dateTime) : that.dateTime != null) return false;
-        if (type != that.type) return false;
+        if (temporalType != that.temporalType) return false;
 
         return true;
     }
@@ -46,7 +54,7 @@ public class TemporalFilterWidgetControllerDto extends FilterDto {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (temporalType != null ? temporalType.hashCode() : 0);
         result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
         return result;
     }

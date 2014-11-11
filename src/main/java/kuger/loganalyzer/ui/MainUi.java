@@ -1,7 +1,4 @@
-package kuger.loganalyzer.ui;/**
- * Created by Michael on 25.05.2014.
- */
-
+package kuger.loganalyzer.ui;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

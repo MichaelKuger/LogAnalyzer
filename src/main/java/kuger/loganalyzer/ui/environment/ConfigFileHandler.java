@@ -1,14 +1,15 @@
 package kuger.loganalyzer.ui.environment;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import kuger.loganalyzer.LogAnalyzerException;
 import kuger.loganalyzer.ui.widgets.filter.FilterDto;
 import kuger.loganalyzer.ui.widgets.filter.FilterType;
 
 import java.io.*;
+import java.lang.reflect.Type;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class ConfigFileHandler {
 

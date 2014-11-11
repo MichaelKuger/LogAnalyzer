@@ -44,4 +44,12 @@ public class RegexFilterWidgetControllerDto extends FilterDto {
         result = 31 * result + (regexType != null ? regexType.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "RegexFilterWidgetControllerDto{" +
+                "pattern='" + pattern + '\'' +
+                ", regexType=" + regexType +
+                '}';
+    }
 }

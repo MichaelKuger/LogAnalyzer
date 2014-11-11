@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 public class CreateEnvironmentControllerDto {
 
     private List<PipelineWidgetControllerDto> pipelines = new ArrayList<>();
+    private List<FilterDto> filters = new ArrayList<>();
     private SinkDto sink;
 
     public void setSink(SinkDto sink) {
@@ -22,11 +23,16 @@ public class CreateEnvironmentControllerDto {
         pipelines.add(dto);
     }
 
-    public Stream<FilterDto> getDistinctFilterStream() {
-        Stream<FilterDto> result = Stream.empty();
-        for (PipelineWidgetControllerDto pipeline : pipelines) {
-                result = Stream.concat(result, pipeline.filterStream());
-        }
-        return result.distinct();
+    @Override
+    public String toString() {
+        return "CreateEnvironmentControllerDto{" +
+                "pipelines=" + pipelines +
+                ", filters=" + filters +
+                ", sink=" + sink +
+                '}';
+    }
+
+    public void addFilter(FilterDto dto) {
+        filters.add(dto);
     }
 }

@@ -32,4 +32,6 @@ public abstract class FilterDto {
     public int hashCode() {
         return identifier != null ? identifier.hashCode() : 0;
     }
+
+    public abstract String toString();
 }

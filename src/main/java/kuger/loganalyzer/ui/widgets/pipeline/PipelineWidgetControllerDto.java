@@ -11,7 +11,7 @@ public class PipelineWidgetControllerDto {
 
     private String inputFileName;
     private String timestampPattern;
-    private List<FilterDto> filter = new ArrayList<>();
+    private List<String> filter = new ArrayList<>();
 
     public void setTimestampPattern(String timestampPattern) {
         this.timestampPattern = timestampPattern;
@@ -21,11 +21,20 @@ public class PipelineWidgetControllerDto {
         this.inputFileName = inputFileName;
     }
 
-    void addFilter(FilterDto dto) {
+    void addFilter(String dto) {
         filter.add(dto);
     }
 
-    public Stream<FilterDto> filterStream() {
+    public Stream<String> filterStream() {
         return filter.stream();
+    }
+
+    @Override
+    public String toString() {
+        return "PipelineWidgetControllerDto{" +
+                "inputFileName='" + inputFileName + '\'' +
+                ", timestampPattern='" + timestampPattern + '\'' +
+                ", filter=" + filter +
+                '}';
     }
 }

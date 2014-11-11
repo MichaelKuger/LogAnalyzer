@@ -16,6 +16,7 @@ import kuger.loganalyzer.core.api.Sink;
 import kuger.loganalyzer.external.FileInputFactory;
 import kuger.loganalyzer.ui.FileChooserBuilder;
 import kuger.loganalyzer.ui.config.ApplicationPreferences;
+import kuger.loganalyzer.ui.widgets.filter.AbstractFilterWidgetController;
 import kuger.loganalyzer.ui.widgets.pipeline.PipelineWidgetController;
 
 import java.io.BufferedWriter;
@@ -37,6 +38,7 @@ public class CreateEnvironmentController {
     private TextField txOutputFile;
 
     private final List<PipelineWidgetController> pipelineControllers = new ArrayList<>();
+    private final List<AbstractFilterWidgetController> filterControllers = new ArrayList<>();
 
     public void btAddPipeline() {
         System.out.println("addPipeline");
@@ -66,6 +68,7 @@ public class CreateEnvironmentController {
             fxmlLoader.setRoot(vbox);
             Pane node = fxmlLoader.load();
             elementsContainer.getChildren().add(node);
+            filterControllers.add(fxmlLoader.getController());
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
@@ -78,6 +81,7 @@ public class CreateEnvironmentController {
             fxmlLoader.setRoot(vbox);
             Pane node = fxmlLoader.load();
             elementsContainer.getChildren().add(node);
+            filterControllers.add(fxmlLoader.getController());
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
@@ -145,6 +149,9 @@ public class CreateEnvironmentController {
             pipelineControllers.stream()
                     .map(PipelineWidgetController::createDto)
                     .forEach(environmentDto::addPipeline);
+            filterControllers.stream()
+                    .map(AbstractFilterWidgetController::createDto)
+                    .forEach(environmentDto::addFilter);
             SinkDto sinkDto = new SinkDto();
             sinkDto.setFile(outputFile);
             environmentDto.setSink(sinkDto);
@@ -159,7 +166,7 @@ public class CreateEnvironmentController {
             String filePath = getFilePath(configFile);
             ApplicationPreferences.INSTANCE.setSetupConfigDefaultPath(filePath);
             CreateEnvironmentControllerDto dto = ConfigFileHandler.load(configFile);
-            dto.getDistinctFilterStream();
+            System.out.println(dto);
         }
     }
 

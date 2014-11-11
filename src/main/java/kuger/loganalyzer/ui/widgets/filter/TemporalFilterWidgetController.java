@@ -12,11 +12,9 @@ import kuger.loganalyzer.core.api.Filter;
 import kuger.loganalyzer.core.api.TemporalType;
 
 import java.net.URL;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.chrono.Chronology;
 import java.util.ResourceBundle;
 
 import static java.time.ZoneOffset.UTC;
@@ -77,7 +75,7 @@ public class TemporalFilterWidgetController extends AbstractFilterWidgetControll
         String identifier = getIdentifier();
         String filtername = getFiltername();
         TemporalFilterWidgetControllerDto result = new TemporalFilterWidgetControllerDto(identifier, filtername);
-        result.setType((TemporalType) temporalTypeChoiceBox.getValue());
+        result.setTemporalType((TemporalType) temporalTypeChoiceBox.getValue());
         result.setDateTime(getDateTime());
         return result;
     }
