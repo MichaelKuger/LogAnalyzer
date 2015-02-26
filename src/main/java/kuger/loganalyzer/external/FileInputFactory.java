@@ -2,7 +2,7 @@ package kuger.loganalyzer.external;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
-import input.FileInput;
+import input.StatementParser;
 import kuger.loganalyzer.core.api.*;
 import util.ScalaHelper;
 
@@ -85,7 +85,7 @@ public final class FileInputFactory {
                     filterActor = getOrCreateFilterActor(actorSystem, downstream, filter);
                     downstream = new ActorRef[]{filterActor};
                 }
-                FileInput fileInput = new FileInput(pipelineDefinition.getFileInput(), downstream);
+                StatementParser fileInput = new StatementParser(pipelineDefinition.getInputContainer(), downstream);
                 pipeline.addFileInput(fileInput);
             }
 
@@ -110,7 +110,7 @@ public final class FileInputFactory {
         private Collection<InputIdentifier> collectInputIdentifiers(Collection<PipelineDefinition> pipelineDefinitions) {
             Collection<InputIdentifier> result = new ArrayList<>();
             for (PipelineDefinition pipelineDefinition : pipelineDefinitions) {
-                result.add(pipelineDefinition.getFileInput().getIdentifier());
+                result.add(pipelineDefinition.getInputContainer().getIdentifier());
             }
             return result;
         }

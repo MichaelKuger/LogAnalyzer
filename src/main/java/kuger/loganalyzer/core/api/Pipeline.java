@@ -1,14 +1,14 @@
 package kuger.loganalyzer.core.api;
 
 import akka.actor.ActorSystem;
-import input.FileInput;
+import input.StatementParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
 public class Pipeline {
-    private Collection<FileInput> fileInputList = new ArrayList<>();
+    private Collection<StatementParser> fileInputList = new ArrayList<>();
     private final Collection<Sink> sinks;
     private ActorSystem actorSystem;
 
@@ -16,7 +16,7 @@ public class Pipeline {
         this.sinks = Arrays.asList(sinks);
     }
 
-    public void addFileInput(FileInput fileInput) {
+    public void addFileInput(StatementParser fileInput) {
         fileInputList.add(fileInput);
     }
 
@@ -26,7 +26,7 @@ public class Pipeline {
 
     public void start() {
         System.out.println("Starting...");
-        for (FileInput input : fileInputList) {
+        for (StatementParser input : fileInputList) {
             input.start();
         }
     }

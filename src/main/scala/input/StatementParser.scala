@@ -6,17 +6,17 @@ import java.time.Instant
 
 import akka.actor.ActorRef
 import api.InputException
-import kuger.loganalyzer.core.api.{FileInputContainer, Input, LogStatement}
+import kuger.loganalyzer.core.api.{Input, InputContainer, LogStatement}
 import messages.{InputDrainedEvent, LogStatementEvent}
 
-class FileInput(inputContainer: FileInputContainer, downstream: Array[ActorRef]) extends Thread with Input {
+class StatementParser(inputContainer: InputContainer, downstream: Array[ActorRef]) extends Thread with Input {
   val DATE_FORMAT: DateFormat = new SimpleDateFormat(inputContainer.getTimestampPattern)
 
   setDaemon(true)
 
-  private val reader: BufferedReader = new BufferedReader(new FileReader(inputContainer.getFile))
-  private var nextLine: String = reader.readLine
-  private var currentStatement = getNextStatement
+  private val reader: BufferedReader = new BufferedReader(inputContainer.getReader)
+  private var nextLine: String = null
+  private var currentStatement: LogStatement = null
 
   private def getNextStatement: LogStatement = {
     var line = nextLine
@@ -68,6 +68,7 @@ class FileInput(inputContainer: FileInputContainer, downstream: Array[ActorRef])
     try {
       val temp = currentStatement
       currentStatement = getNextStatement
+      println("Pop!:" +temp)
       temp
     }
     catch {
@@ -77,6 +78,8 @@ class FileInput(inputContainer: FileInputContainer, downstream: Array[ActorRef])
   }
 
   override def run {
+    nextLine = reader.readLine
+    currentStatement = getNextStatement
     var statement: LogStatement = null
     try {
       var counter = 0
@@ -88,7 +91,7 @@ class FileInput(inputContainer: FileInputContainer, downstream: Array[ActorRef])
         downstream foreach (_ ! message)
         counter += 1
       }
-      println("FileInput " + inputContainer.getFile + " finished! Duration[ms]: " + counter)
+      println("FileInput " + inputContainer + " finished! Duration[ms]: " + counter)
       downstream foreach (_ ! InputDrainedEvent(this))
     }
     catch {

@@ -5,7 +5,7 @@ import akka.actor.{ActorSystem, Props}
 import filter.FilterActor
 import filter.regex.RegexFilter
 import filter.temporal.TemporalFilter
-import input.FileInput
+import input.StatementParser
 import kuger.loganalyzer.core.api.TemporalType
 
 object Startup {

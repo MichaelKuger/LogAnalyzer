@@ -2,18 +2,15 @@ package kuger.loganalyzer.ui.environment;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import kuger.loganalyzer.LogAnalyzerException;
-import kuger.loganalyzer.core.api.LogStatement;
-import kuger.loganalyzer.core.api.Pipeline;
-import kuger.loganalyzer.core.api.PipelineDefinition;
-import kuger.loganalyzer.core.api.Sink;
+import kuger.loganalyzer.core.api.*;
 import kuger.loganalyzer.external.FileInputFactory;
+import kuger.loganalyzer.ssh.SshConfig;
 import kuger.loganalyzer.ui.FileChooserBuilder;
 import kuger.loganalyzer.ui.config.ApplicationPreferences;
 import kuger.loganalyzer.ui.widgets.filter.AbstractFilterWidgetController;
@@ -42,19 +39,22 @@ public class CreateEnvironmentController {
 
     public void btAddPipeline() {
         System.out.println("addPipeline");
-        Node newBox = createPipelineContainer();
-        boxContainer.getChildren().add(newBox);
+        createPipelineContainer("/ui/widgets/pipeline_widget.fxml");
+
     }
 
-    private Node createPipelineContainer() {
+    public void btAddSshPipeline() {
+        createPipelineContainer("/ui/widgets/sshSourcePanel.fxml");
+    }
+
+    private void createPipelineContainer(String resourcePath) {
         try {
             VBox sourcePanel = new VBox();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/widgets/pipeline_widget.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(resourcePath));
             fxmlLoader.setRoot(sourcePanel);
             VBox node = fxmlLoader.load();
-            elementsContainer.getChildren().add(node);
             pipelineControllers.add(fxmlLoader.getController());
-            return node;
+            boxContainer.getChildren().add(node);
         } catch (IOException e) {
             throw new RuntimeException("Could not load widget.", e);
         }
@@ -94,11 +94,13 @@ public class CreateEnvironmentController {
     }
 
     private void filterAction() {
-//        final ConsoleSink consoleSink = new ConsoleSink();
-        final FileSink fileSink = new FileSink(outputFile);
+//        final ConsoleSink sink = new ConsoleSink();
+        final FileSink sink = new FileSink(outputFile);
         Collection<PipelineDefinition> pipelineDefinitions = getPipelines();
-//        final Pipeline pipeline = FileInputFactory.fillSink(pipelineDefinitions, consoleSink, fileSink);
-        final Pipeline pipeline = FileInputFactory.fillSink(pipelineDefinitions, fileSink);
+//        pipelineDefinitions = new ArrayList<>();
+//        SshConfig config = new SshConfig("root", PW!, "36216.vs.webtropia.com", 22);
+//        pipelineDefinitions.add(new PipelineDefinition(new ScpInputContainer(config, "/root/config.txt", "yyyy-MM-dd", new InputIdentifier())));
+        final Pipeline pipeline = FileInputFactory.fillSink(pipelineDefinitions, sink);
         pipeline.start();
     }
 
@@ -155,7 +157,7 @@ public class CreateEnvironmentController {
             SinkDto sinkDto = new SinkDto();
             sinkDto.setFile(outputFile);
             environmentDto.setSink(sinkDto);
-           ConfigFileHandler.save(environmentDto, configFile);
+            ConfigFileHandler.save(environmentDto, configFile);
         }
     }
 
@@ -171,10 +173,10 @@ public class CreateEnvironmentController {
     }
 
     protected class ConsoleSink implements Sink {
-        private TreeSet<LogStatement> statements = new TreeSet<>();
+        private List<LogStatement> statements = new LinkedList<>();
 
         @Override
-        public synchronized void add(LogStatement logStatement) {
+        public void add(LogStatement logStatement) {
             statements.add(logStatement);
         }
 
@@ -184,6 +186,7 @@ public class CreateEnvironmentController {
         }
 
         public synchronized void printAll() {
+            Collections.sort(statements);
             statements.forEach(System.out::println);
         }
     }

@@ -43,14 +43,16 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
             </rowConstraints>
             <children>
                 <Label text="Output" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                 <TextField fx:id="txOutputFile" promptText="file" GridPane.rowIndex="3" />
                 <Button mnemonicParsing="false" onAction="#btSetOutputFile" text="..." GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <Button mnemonicParsing="false" onAction="#btAddPipeline" text="Add Pipeline" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" />
-                <Button mnemonicParsing="false" onAction="#btStart" text="Start" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                <Button mnemonicParsing="false" onAction="#btStart" text="Start" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#btAddSshPipeline" text="Add SSH Pipeline" GridPane.rowIndex="1" />
             </children>
             <BorderPane.margin>
                 <Insets />

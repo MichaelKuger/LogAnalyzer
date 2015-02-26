@@ -4,18 +4,17 @@ import java.util.Arrays;
 
 public class PipelineDefinition {
 
-    private FileInputContainer fileInput;
+    private InputContainer inputContainer;
     private final Filter[] filters;
 
-    public PipelineDefinition(FileInputContainer fileInput, Filter... filters) {
-        this.fileInput = fileInput;
+    public PipelineDefinition(InputContainer inputContainer, Filter... filters) {
+        this.inputContainer = inputContainer;
         this.filters = filters;
     }
 
-    public FileInputContainer getFileInput() {
-        return fileInput;
+    public InputContainer getInputContainer() {
+        return inputContainer;
     }
-
 
     public Filter[] getFilters() {
         return filters;
@@ -24,7 +23,7 @@ public class PipelineDefinition {
     @Override
     public String toString() {
         return "Pipeline{" +
-                "fileInput=" + fileInput +
+                "inputContainer=" + inputContainer +
                 ", filters=" + Arrays.toString(filters) +
                 '}';
     }
